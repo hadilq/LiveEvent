@@ -1,4 +1,5 @@
 [ ![Download](https://api.bintray.com/packages/hadilq/AndroidArch/LiveEvent/images/download.svg?version=1.0.0) ](https://bintray.com/hadilq/AndroidArch/LiveEvent/1.0.0/link)
+[![Build Status](https://travis-ci.org/hadilq/LiveEvent.svg?branch=master)](https://travis-ci.org/hadilq/LiveEvent)
 
 Live Event
 ---

@@ -33,8 +33,8 @@ android {
 dependencies {
     kapt dependency.archComponentsCompiler
 
-    implementation project(':lib')
-//    implementation "com.hadilq.liveevent:liveevent:$libVersion"
+//    implementation project(':lib')
+    implementation "com.github.hadilq.liveevent:liveevent:$libVersion"
 
     implementation dependency.kotlin
     implementation dependency.supportCompat

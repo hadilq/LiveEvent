@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.hadilq.singleevent.sample
+package com.hadilq.liveevent.sample
 
 import android.os.Bundle
 import android.util.Log

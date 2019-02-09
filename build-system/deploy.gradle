@@ -13,21 +13,13 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: 'com.jfrog.bintray'
+
+apply plugin: 'maven'
+apply plugin: 'signing'
 apply plugin: 'org.jetbrains.dokka'
 
-def gradlePropertiesFile = rootProject.file('build-system/keystore.gradle')
-if (gradlePropertiesFile.exists()) {
-    apply from: '../build-system/keystore.gradle'
-} else {
-    ext {
-        api_key = ''
-    }
-}
-
 group = groupId
-project.archivesBaseName = artifactId
+archivesBaseName = artifactId
 version = libVersion
 
 dokka {
@@ -35,29 +27,49 @@ dokka {
     outputDirectory = "$buildDir/javadoc"
 }
 
-bintray {
-    user = 'hadilq'
-    key = api_key
-    configurations = ['archives']
-    publish = true
-    override = false
-    pkg {
-        repo = 'AndroidArch'
-        name = 'LiveEvent'
-        version {
-            name = libVersion
-        }
-    }
-}
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
-install {
-    repositories.mavenInstaller {
-        pom.project {
-            packaging 'aar'
-            groupId groupId
-            artifactId artifactId
-            version libVersion
-            name artifactId
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            snapshotRepository(url: "https://oss.sonatype.org/content/repositories/snapshots/") {
+                authentication(userName: ossrhUsername, password: ossrhPassword)
+            }
+
+            pom.project {
+                name 'LiveEvent'
+                packaging 'aar'
+                // optionally artifactId can be defined here
+                description 'This library holds a class to handle single live events in Android MVVM architectural pattern. This class is extended ' +
+                        'form LiveData class, from `androidx.lifecycle:lifecycle-extensions` library, to propagate the data as an event, ' +
+                        'which means it emits data just once.'
+                url 'https://github.com/hadilq/LiveEvent'
+
+                scm {
+                    connection 'scm:git@github.com:hadilq/LiveEvent.git'
+                    developerConnection 'scm:git@github.com:hadilq/LiveEvent.git'
+                    url 'https://github.com/hadilq/LiveEvent'
+                }
+
+                licenses {
+                    license {
+                        name 'The Apache License, Version 2.0'
+                        url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'hadilq'
+                        name 'Hadi Lashkari Ghouchani'
+                        email 'hadilq.dev@gmail.com'
+                    }
+                }
+            }
         }
     }
 }
@@ -76,10 +88,13 @@ task javadoc(type: Javadoc) {
 task javadocJar(type: Jar, dependsOn: javadoc) {
     classifier = 'javadoc'
     from javadoc.destinationDir
-    // options.encoding = 'UTF-8'
 }
 
 artifacts {
     archives javadocJar
     archives sourcesJar
+}
+
+signing {
+    sign configurations.archives
 }

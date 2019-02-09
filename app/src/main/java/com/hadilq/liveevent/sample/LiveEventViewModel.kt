@@ -13,11 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.hadilq.singleevent.sample
+package com.hadilq.liveevent.sample
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.hadilq.singleevent.LiveEvent
+import com.hadilq.liveevent.LiveEvent
 
 class LiveEventViewModel : ViewModel() {
     private val clickedState = LiveEvent<String>()

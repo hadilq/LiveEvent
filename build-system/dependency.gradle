@@ -20,8 +20,8 @@ ext {
     android_maven_version = '2.1'
     gradle_bintray_version = '1.8.4'
 
-    groupId = 'com.hadilq.singleevent'
-    artifactId = 'singleevent'
+    groupId = 'com.github.hadilq.liveevent'
+    artifactId = 'liveevent'
     libVersion = '1.0.0'
 
     androidx_lib_version = '1.0.0'

@@ -22,7 +22,7 @@ apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 28
     defaultConfig {
-        applicationId "com.hadilq.singleevent.sample"
+        applicationId "com.hadilq.liveevent.sample"
         minSdkVersion 14
         targetSdkVersion 28
         versionCode 1
@@ -34,7 +34,7 @@ dependencies {
     kapt dependency.archComponentsCompiler
 
 //    implementation project(':lib')
-    implementation "com.hadilq.singleevent:singleevent:$libVersion"
+    implementation "com.github.hadilq.liveevent:liveevent:$libVersion"
 
     implementation dependency.kotlin
     implementation dependency.supportCompat

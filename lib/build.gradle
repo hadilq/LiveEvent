@@ -37,4 +37,6 @@ dependencies {
     testImplementation dependency.mockito
 }
 
-apply from: '../build-system/deploy.gradle'
+if (project.hasProperty("signing.keyId")) {
+    apply from: '../build-system/deploy.gradle'
+}

@@ -1,4 +1,3 @@
-[ ![Download](https://api.bintray.com/packages/hadilq/AndroidArch/LiveEvent/images/download.svg?version=1.0.0) ](https://bintray.com/hadilq/AndroidArch/LiveEvent/1.0.0/link)
 [![Build Status](https://travis-ci.org/hadilq/LiveEvent.svg?branch=master)](https://travis-ci.org/hadilq/LiveEvent)
 
 Live Event
@@ -24,10 +23,11 @@ class LiveEventViewModel : ViewModel() {
 
 Download
 ---
-Download via gradle:
+Download via gradle
 ```groovy
-implementation "com.hadilq.singleevent:singleevent:$libVersion"
+implementation "com.github.hadilq.liveevent:liveevent:$libVersion"
 ```
+where the libVersion is [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.hadilq.liveevent/liveevent/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.hadilq.liveevent/liveevent).
 
 Contribution
 ---

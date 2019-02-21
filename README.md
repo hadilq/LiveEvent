@@ -27,7 +27,7 @@ Download via gradle
 ```groovy
 implementation "com.github.hadilq.liveevent:liveevent:$libVersion"
 ```
-where the libVersion is [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.hadilq.liveevent/liveevent/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.hadilq.liveevent/liveevent).
+where the `libVersion` is [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.hadilq.liveevent/liveevent/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.hadilq.liveevent/liveevent).
 
 Contribution
 ---

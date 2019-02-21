@@ -166,7 +166,38 @@ class LiveEventTest {
         // When
         owner = TestLifecycleOwner()
         observer = mock()
+        liveEvent.observe(owner, observer)
         owner.start()
+
+        // Then
+        verify(observer, never()).onChanged(event)
+    }
+
+    @Test
+    fun `observe after one observation with new owner after start`() {
+        // Given
+        owner.start()
+        liveEvent.observe(owner, observer)
+
+        val event = "event"
+
+        // When
+        liveEvent.value = event
+
+        // Then
+        verify(observer, times(1)).onChanged(event)
+
+        // When
+        owner.destroy()
+
+        // Then
+        verify(observer, times(1)).onChanged(event)
+
+        // When
+        owner = TestLifecycleOwner()
+        observer = mock()
+        owner.start()
+        liveEvent.observe(owner, observer)
 
         // Then
         verify(observer, never()).onChanged(event)

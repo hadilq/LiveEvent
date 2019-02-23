@@ -144,6 +144,37 @@ class LiveEventTest {
     }
 
     @Test
+    fun `observe after one observation multi owner`() {
+        // Given
+        owner.start()
+        liveEvent.observe(owner, observer)
+        val owner1 = TestLifecycleOwner()
+        val observer1 = mock<Observer<String>>()
+        owner1.start()
+
+        val event = "event"
+
+        // When
+        liveEvent.value = event
+
+        // Then
+        verify(observer, times(1)).onChanged(event)
+
+        // Given
+        liveEvent.observe(owner1, observer1)
+
+        // Then
+        verify(observer1, never()).onChanged(event)
+
+        // When
+        liveEvent.value = event
+
+        // Then
+        verify(observer, times(2)).onChanged(event)
+        verify(observer1, times(1)).onChanged(event)
+    }
+
+    @Test
     fun `observe after one observation with new owner`() {
         // Given
         owner.start()
@@ -277,5 +308,61 @@ class LiveEventTest {
 
         // Then
         verify(observer, never()).onChanged(event)
+    }
+
+    @Test
+    fun `observe after remove multi owner`() {
+        // Given
+        owner.start()
+        liveEvent.observe(owner, observer)
+        val owner1 = TestLifecycleOwner()
+        val observer1 = mock<Observer<String>>()
+        owner1.start()
+
+        val event = "event"
+
+        // When
+        liveEvent.value = event
+
+        // Then
+        verify(observer, times(1)).onChanged(event)
+        verify(observer1, never()).onChanged(event)
+
+        // When
+        liveEvent.observe(owner1, observer1)
+        liveEvent.removeObserver(observer)
+        liveEvent.value = event
+
+        // Then
+        verify(observer, times(1)).onChanged(event)
+        verify(observer1, times(1)).onChanged(event)
+    }
+
+    @Test
+    fun `observe after remove owner multi owner`() {
+        // Given
+        owner.start()
+        liveEvent.observe(owner, observer)
+        val owner1 = TestLifecycleOwner()
+        val observer1 = mock<Observer<String>>()
+        owner1.start()
+
+        val event = "event"
+
+        // When
+        liveEvent.value = event
+
+        // Then
+        verify(observer, times(1)).onChanged(event)
+        verify(observer1, never()).onChanged(event)
+
+        // When
+        liveEvent.observe(owner1, observer1)
+        liveEvent.removeObservers(owner)
+        liveEvent.value = event
+
+        // Then
+        verify(observer, times(1)).onChanged(event)
+        verify(observer1, times(1)).onChanged(event)
     }
 }

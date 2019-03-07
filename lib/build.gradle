@@ -18,23 +18,23 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion Versions.compileSdkVersion
 
     defaultConfig {
-        minSdkVersion 9
-        targetSdkVersion 28
-        versionName libVersion
+        minSdkVersion Versions.minSdkVersion
+        targetSdkVersion Versions.targetSdkVersion
+        versionName Versions.libVersion
     }
 }
 
 dependencies {
-    implementation dependency.kotlin
-    implementation dependency.archComponents
+    implementation Depends.kotlin
+    implementation Depends.archComponents
 
-    testImplementation dependency.kotlin
-    testImplementation dependency.junit
-    testImplementation dependency.coreTesting
-    testImplementation dependency.mockito
+    testImplementation Depends.kotlin
+    testImplementation Depends.junit
+    testImplementation Depends.coreTesting
+    testImplementation Depends.mockito
 }
 
 if (project.hasProperty("signing.keyId")) {

@@ -13,4 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-include ':app', ':lib'
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+    dependencies {
+        classpath("com.android.tools.build:gradle:3.3.1")
+        classpath(kotlin("gradle-plugin", version = Versions.kotlin_version))
+        classpath("org.jetbrains.dokka:dokka-gradle-plugin:${Versions.dokka_version}")
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+    }
+}
+
+tasks.register("clean", Delete::class) {
+    delete(rootProject.buildDir)
+}

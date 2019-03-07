@@ -13,30 +13,31 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-apply plugin: 'com.android.library'
 
-apply plugin: 'kotlin-android'
+plugins {
+    id("com.android.application")
+    kotlin("android")
+}
 
 android {
-    compileSdkVersion Versions.compileSdkVersion
-
+    compileSdkVersion(Versions.compileSdkVersion)
     defaultConfig {
-        minSdkVersion Versions.minSdkVersion
-        targetSdkVersion Versions.targetSdkVersion
-        versionName Versions.libVersion
+        minSdkVersion(Versions.minSdkVersion)
+        targetSdkVersion(Versions.targetSdkVersion)
+        versionName = Versions.libVersion
     }
 }
 
 dependencies {
-    implementation Depends.kotlin
-    implementation Depends.archComponents
+    implementation(Depends.kotlin)
+    implementation(Depends.archComponents)
 
-    testImplementation Depends.kotlin
-    testImplementation Depends.junit
-    testImplementation Depends.coreTesting
-    testImplementation Depends.mockito
+    testImplementation(Depends.kotlin)
+    testImplementation(Depends.junit)
+    testImplementation(Depends.coreTesting)
+    testImplementation(Depends.mockito)
 }
 
 if (project.hasProperty("signing.keyId")) {
-    apply from: '../build-system/deploy.gradle'
+    apply { from("../build-system/deploy.gradle") }
 }

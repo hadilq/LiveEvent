@@ -28,7 +28,7 @@ import org.junit.Test
 import org.junit.rules.TestRule
 
 
-class LiveEventTest {
+class LiveEventPostValueTest {
 
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
@@ -53,7 +53,7 @@ class LiveEventTest {
         val event = "event"
 
         // When
-        liveEvent.value = event
+        liveEvent.postValue(event)
 
         // Then
         verify(observer, times(1)).onChanged(event)
@@ -68,7 +68,7 @@ class LiveEventTest {
         val event = "event"
 
         // When
-        liveEvent.value = event
+        liveEvent.postValue(event)
 
         // Then
         verify(observer, never()).onChanged(event)
@@ -89,7 +89,7 @@ class LiveEventTest {
         val event = "event"
 
         // When
-        liveEvent.value = event
+        liveEvent.postValue(event)
 
         // Then
         verify(observer, never()).onChanged(event)
@@ -104,7 +104,7 @@ class LiveEventTest {
         val event = "event"
 
         // When
-        liveEvent.value = event
+        liveEvent.postValue(event)
 
         // Then
         verify(observer, never()).onChanged(event)
@@ -125,7 +125,7 @@ class LiveEventTest {
         val event = "event"
 
         // When
-        liveEvent.value = event
+        liveEvent.postValue(event)
 
         // Then
         verify(observer, times(1)).onChanged(event)
@@ -155,7 +155,7 @@ class LiveEventTest {
         val event = "event"
 
         // When
-        liveEvent.value = event
+        liveEvent.postValue(event)
 
         // Then
         verify(observer, times(1)).onChanged(event)
@@ -167,7 +167,7 @@ class LiveEventTest {
         verify(observer1, never()).onChanged(event)
 
         // When
-        liveEvent.value = event
+        liveEvent.postValue(event)
 
         // Then
         verify(observer, times(2)).onChanged(event)
@@ -183,7 +183,7 @@ class LiveEventTest {
         val event = "event"
 
         // When
-        liveEvent.value = event
+        liveEvent.postValue(event)
 
         // Then
         verify(observer, times(1)).onChanged(event)
@@ -213,7 +213,7 @@ class LiveEventTest {
         val event = "event"
 
         // When
-        liveEvent.value = event
+        liveEvent.postValue(event)
 
         // Then
         verify(observer, times(1)).onChanged(event)
@@ -243,14 +243,14 @@ class LiveEventTest {
         val event = "event"
 
         // When
-        liveEvent.value = event
+        liveEvent.postValue(event)
 
         // Then
         verify(observer, times(1)).onChanged(event)
 
         // When
         liveEvent.removeObserver(observer)
-        liveEvent.value = event
+        liveEvent.postValue(event)
 
         // Then
         verify(observer, times(1)).onChanged(event)
@@ -266,7 +266,7 @@ class LiveEventTest {
         val event = "event"
 
         // When
-        liveEvent.value = event
+        liveEvent.postValue(event)
 
         // Then
         verify(observer, never()).onChanged(event)
@@ -281,14 +281,14 @@ class LiveEventTest {
         val event = "event"
 
         // When
-        liveEvent.value = event
+        liveEvent.postValue(event)
 
         // Then
         verify(observer, times(1)).onChanged(event)
 
         // When
         liveEvent.removeObservers(owner)
-        liveEvent.value = event
+        liveEvent.postValue(event)
 
         // Then
         verify(observer, times(1)).onChanged(event)
@@ -304,7 +304,7 @@ class LiveEventTest {
         val event = "event"
 
         // When
-        liveEvent.value = event
+        liveEvent.postValue(event)
 
         // Then
         verify(observer, never()).onChanged(event)
@@ -322,7 +322,7 @@ class LiveEventTest {
         val event = "event"
 
         // When
-        liveEvent.value = event
+        liveEvent.postValue(event)
 
         // Then
         verify(observer, times(1)).onChanged(event)
@@ -331,7 +331,7 @@ class LiveEventTest {
         // When
         liveEvent.observe(owner1, observer1)
         liveEvent.removeObserver(observer)
-        liveEvent.value = event
+        liveEvent.postValue(event)
 
         // Then
         verify(observer, times(1)).onChanged(event)
@@ -350,7 +350,7 @@ class LiveEventTest {
         val event = "event"
 
         // When
-        liveEvent.value = event
+        liveEvent.postValue(event)
 
         // Then
         verify(observer, times(1)).onChanged(event)
@@ -359,7 +359,7 @@ class LiveEventTest {
         // When
         liveEvent.observe(owner1, observer1)
         liveEvent.removeObservers(owner)
-        liveEvent.value = event
+        liveEvent.postValue(event)
 
         // Then
         verify(observer, times(1)).onChanged(event)

@@ -1,7 +1,7 @@
 object Versions {
     const val compileSdkVersion = 28
     const val targetSdkVersion = 28
-    const val minSdkVersion = 9
+    const val minSdkVersion = 14
 
     const val kotlin_version = "1.3.11"
     const val dokka_version = "0.9.16"

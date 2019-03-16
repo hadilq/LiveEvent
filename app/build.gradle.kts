@@ -9,7 +9,7 @@ android {
     compileSdkVersion(Versions.compileSdkVersion)
     defaultConfig {
         applicationId = "com.hadilq.liveevent.sample"
-        minSdkVersion(14)
+        minSdkVersion(Versions.minSdkVersion)
         targetSdkVersion(Versions.targetSdkVersion)
         versionCode = 1
         versionName = "1.0"

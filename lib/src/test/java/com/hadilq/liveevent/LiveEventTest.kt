@@ -60,6 +60,24 @@ class LiveEventTest {
     }
 
     @Test
+    fun `observe multi observers`() {
+        // Given
+        owner.start()
+        val observer1 = mock<Observer<String>>()
+        liveEvent.observe(owner, observer)
+        liveEvent.observe(owner, observer1)
+
+        val event = "event"
+
+        // When
+        liveEvent.value = event
+
+        // Then
+        verify(observer, times(1)).onChanged(event)
+        verify(observer1, times(1)).onChanged(event)
+    }
+
+    @Test
     fun `observe after start`() {
         // Given
         owner.create()
@@ -78,6 +96,31 @@ class LiveEventTest {
 
         // Then
         verify(observer, times(1)).onChanged(event)
+    }
+
+    @Test
+    fun `observe after start with multi observers`() {
+        // Given
+        owner.create()
+        val observer1 = mock<Observer<String>>()
+        liveEvent.observe(owner, observer)
+        liveEvent.observe(owner, observer1)
+
+        val event = "event"
+
+        // When
+        liveEvent.value = event
+
+        // Then
+        verify(observer, never()).onChanged(event)
+        verify(observer1, never()).onChanged(event)
+
+        // When
+        owner.start()
+
+        // Then
+        verify(observer, times(1)).onChanged(event)
+        verify(observer1, times(1)).onChanged(event)
     }
 
     @Test

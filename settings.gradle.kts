@@ -14,3 +14,4 @@
  * limitations under the License.
  */
 include(":app", ":lib")
+rootProject.buildFileName = "build.gradle.kts"

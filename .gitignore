@@ -12,6 +12,7 @@ build-system/keystore.gradle
 .idea/misc.xml
 .idea/runConfigurations.xml
 .idea/vcs.xml
+.idea/encodings.xml
 .DS_Store
 /build
 /captures

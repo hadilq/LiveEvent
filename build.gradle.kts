@@ -1,3 +1,6 @@
+plugins {
+    kotlin("jvm") version Versions.kotlin_version
+}
 /**
  * Copyright 2019 Hadi Lashkari Ghouchani
 
@@ -19,7 +22,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:3.3.1")
+        classpath("com.android.tools.build:gradle:3.3.2")
         classpath(kotlin("gradle-plugin", version = Versions.kotlin_version))
         classpath("org.jetbrains.dokka:dokka-gradle-plugin:${Versions.dokka_version}")
     }
@@ -31,8 +34,4 @@ allprojects {
         jcenter()
         mavenCentral()
     }
-}
-
-tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
 }

@@ -60,12 +60,43 @@ class LiveEventTest {
     }
 
     @Test
+    fun observeForever() {
+        // Given
+        liveEvent.observeForever(observer)
+
+        val event = "event"
+
+        // When
+        liveEvent.value = event
+
+        // Then
+        verify(observer, times(1)).onChanged(event)
+    }
+
+    @Test
     fun `observe multi observers`() {
         // Given
         owner.start()
         val observer1 = mock<Observer<String>>()
         liveEvent.observe(owner, observer)
         liveEvent.observe(owner, observer1)
+
+        val event = "event"
+
+        // When
+        liveEvent.value = event
+
+        // Then
+        verify(observer, times(1)).onChanged(event)
+        verify(observer1, times(1)).onChanged(event)
+    }
+
+    @Test
+    fun `observeForever multi observers`() {
+        // Given
+        val observer1 = mock<Observer<String>>()
+        liveEvent.observeForever(observer)
+        liveEvent.observeForever(observer1)
 
         val event = "event"
 

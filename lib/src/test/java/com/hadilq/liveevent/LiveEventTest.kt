@@ -439,4 +439,20 @@ class LiveEventTest {
         verify(observer, times(1)).onChanged(event)
         verify(observer1, times(1)).onChanged(event)
     }
+    
+    @Test
+    fun `observe pending event`() {
+        // Given
+        owner.start()
+        val event = "event"
+        val lateObserver = mock<Observer<String>>()
+        
+        liveEvent.value = event
+        
+        // When
+        liveEvent.observe(owner, lateObserver)
+        
+        // Then
+        verify(lateObserver, times(1)).onChanged(event)
+    }
 }

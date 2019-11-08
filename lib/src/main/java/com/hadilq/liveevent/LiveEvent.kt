@@ -45,7 +45,7 @@ class LiveEvent<T> : MediatorLiveData<T>() {
 
     @MainThread
     override fun removeObserver(observer: Observer<in T>) {
-        if (observers.remove<Observer<out Any?>?>(observer)) {
+        if (observers.remove(observer)) {
             super.removeObserver(observer)
             return
         }
@@ -64,11 +64,11 @@ class LiveEvent<T> : MediatorLiveData<T>() {
     override fun setValue(t: T?) {
         if (observers.isEmpty()) {
             // if there are no observers mark a pending flag so new observers will pick up the event
-            pending.set(true)
+            pending.set(true) 
         } else {
-            // if there are some, then the existing observers consume the data and new ones have to
+            // if there are some, then the existing observers consume the data and new ones have to 
             // wait for the next setValue
-            pending.set(false)
+            pending.set(false) 
             observers.forEach { it.newValue() }
         }
 

@@ -24,10 +24,14 @@ import androidx.lifecycle.Observer
 class LiveEvent<T> : MediatorLiveData<T>() {
 
     private val observers = ArraySet<ObserverWrapper<in T>>()
+    private val pending = AtomicBoolean(false)
 
     @MainThread
     override fun observe(owner: LifecycleOwner, observer: Observer<in T>) {
-        val wrapper = ObserverWrapper(observer)
+        // if there is a pending value set up the new wrapper with that pending value, it should
+        // get notified right away
+        val wrapper = ObserverWrapper(observer, pending.getAndSet(false))
+
         observers.add(wrapper)
         super.observe(owner, wrapper)
     }
@@ -41,7 +45,7 @@ class LiveEvent<T> : MediatorLiveData<T>() {
 
     @MainThread
     override fun removeObserver(observer: Observer<in T>) {
-        if (observers.remove(observer)) {
+        if (observers.remove<Observer<out Any?>?>(observer)) {
             super.removeObserver(observer)
             return
         }
@@ -58,13 +62,22 @@ class LiveEvent<T> : MediatorLiveData<T>() {
 
     @MainThread
     override fun setValue(t: T?) {
-        observers.forEach { it.newValue() }
+        if (observers.isEmpty()) {
+            // if there are no observers mark a pending flag so new observers will pick up the event
+            pending.set(true)
+        } else {
+            // if there are some, then the existing observers consume the data and new ones have to
+            // wait for the next setValue
+            pending.set(false)
+            observers.forEach { it.newValue() }
+        }
+
         super.setValue(t)
     }
 
-    private class ObserverWrapper<T>(val observer: Observer<T>) : Observer<T> {
+    private class ObserverWrapper<T>(val observer: Observer<T>, initialPending: Boolean = false) : Observer<T> {
 
-        private var pending = false
+        private var pending = initialPending
 
         override fun onChanged(t: T?) {
             if (pending) {

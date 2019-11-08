@@ -20,6 +20,7 @@ import androidx.collection.ArraySet
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Observer
+import java.util.concurrent.atomic.AtomicBoolean
 
 class LiveEvent<T> : MediatorLiveData<T>() {
 
@@ -38,7 +39,7 @@ class LiveEvent<T> : MediatorLiveData<T>() {
 
     @MainThread
     override fun observeForever(observer: Observer<in T>) {
-        val wrapper = ObserverWrapper(observer)
+        val wrapper = ObserverWrapper(observer, pending.getAndSet(false))
         observers.add(wrapper)
         super.observeForever(wrapper)
     }
@@ -75,7 +76,7 @@ class LiveEvent<T> : MediatorLiveData<T>() {
         super.setValue(t)
     }
 
-    private class ObserverWrapper<T>(val observer: Observer<T>, initialPending: Boolean = false) : Observer<T> {
+    private class ObserverWrapper<T>(val observer: Observer<T>, initialPending: Boolean) : Observer<T> {
 
         private var pending = initialPending
 

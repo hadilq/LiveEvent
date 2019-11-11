@@ -455,4 +455,33 @@ class LiveEventTest {
         // Then
         verify(lateObserver, times(1)).onChanged(event)
     }
+
+    @Test
+    fun `observe pending event just once`() {
+        // Given
+        owner.create()
+        owner.start()
+        owner.resume()
+        val event = "event"
+        val lateObserver = mock<Observer<String>>()
+
+        liveEvent.value = event
+
+        // When
+        liveEvent.observe(owner, lateObserver)
+        owner.pause() // simulate a configuration change
+        owner.stop()
+        owner.destroy()
+
+        val newOwner = TestLifecycleOwner()
+        val newObserver = mock<Observer<String>>()
+        newOwner.create()
+        newOwner.start()
+        newOwner.resume()
+        liveEvent.observe(newOwner, newObserver)
+
+        // Then
+        verify(lateObserver, times(1)).onChanged(event)
+        verify(newObserver, never()).onChanged(event)
+    }
 }

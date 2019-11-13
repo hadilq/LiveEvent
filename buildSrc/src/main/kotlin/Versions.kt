@@ -10,7 +10,7 @@ object Versions {
 
     const val groupId = "com.github.hadilq.liveevent"
     const val artifactId = "liveevent"
-    const val libVersion = "1.0.1"
+    const val libVersion = "1.2.0"
 
     const val androidx_lib_version = "1.0.1"
     const val constraint_layout_version = "1.1.3"

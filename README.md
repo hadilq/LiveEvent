@@ -5,7 +5,7 @@ Live Event
 ---
 This library holds a class to handle single live events in Android MVVM architectural pattern. This class is extended
 form LiveData class, from `androidx.lifecycle:lifecycle-extensions` library, to propagate the data as an event,
-which means it emits data just once.
+which means it emits data just once, not after configuration changes again.
 
 Usage
 ---

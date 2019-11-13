@@ -12,10 +12,10 @@ object Versions {
     const val artifactId = "liveevent"
     const val libVersion = "1.0.1"
 
-    const val androidx_lib_version = "1.0.0"
+    const val androidx_lib_version = "1.0.1"
     const val constraint_layout_version = "1.1.3"
-    const val androidx_lifecycle_lib_version = "2.0.0-rc01"
+    const val androidx_lifecycle_lib_version = "2.1.0"
     const val junit_version = "4.12"
-    const val androidx_testing = "2.0.0"
-    const val mockito_version = "2.1.0"
+    const val androidx_testing = "2.1.0"
+    const val mockito_version = "2.2.0"
 }

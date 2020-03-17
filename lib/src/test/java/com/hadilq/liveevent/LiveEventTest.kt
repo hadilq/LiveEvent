@@ -510,4 +510,50 @@ class LiveEventTest {
         verify(observer, times(1)).onChanged(event)
         verify(observer1, times(1)).onChanged(event)
     }
+
+    @Test
+    fun `observe when value exists multi owners`() {
+        // Given
+        val event = "event"
+        liveEvent.value = event
+        val owner1 = TestLifecycleOwner()
+        owner1.start()
+        owner.start()
+        val observer1 = mock<Observer<String>>()
+
+        // When
+        liveEvent.observe(owner, observer)
+        liveEvent.observe(owner1, observer1)
+
+        // Then
+        verify(observer, times(1)).onChanged(event)
+        verify(observer1, never()).onChanged(any())
+    }
+
+    @Test
+    fun `observe after start when value exists multi owners`() {
+        // Given
+        val event = "event"
+        liveEvent.value = event
+        val owner1 = TestLifecycleOwner()
+        owner1.create()
+        owner.create()
+        val observer1 = mock<Observer<String>>()
+
+        // When
+        liveEvent.observe(owner, observer)
+        liveEvent.observe(owner1, observer1)
+
+        // Then
+        verify(observer, never()).onChanged(any())
+        verify(observer1, never()).onChanged(any())
+
+        // When
+        owner.start()
+        owner1.start()
+
+        // Then
+        verify(observer, times(1)).onChanged(event)
+        verify(observer1, times(1)).onChanged(event)
+    }
 }

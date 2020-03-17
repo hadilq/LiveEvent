@@ -17,11 +17,7 @@ package com.hadilq.liveevent
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.hadilq.liveevent.LiveEvent
-import com.nhaarman.mockitokotlin2.mock
-import com.nhaarman.mockitokotlin2.never
-import com.nhaarman.mockitokotlin2.times
-import com.nhaarman.mockitokotlin2.verify
+import com.nhaarman.mockitokotlin2.*
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
@@ -434,6 +430,81 @@ class LiveEventTest {
         liveEvent.observe(owner1, observer1)
         liveEvent.removeObservers(owner)
         liveEvent.value = event
+
+        // Then
+        verify(observer, times(1)).onChanged(event)
+        verify(observer1, times(1)).onChanged(event)
+    }
+
+    @Test
+    fun `observe when value exists`() {
+        // Given
+        val event = "event"
+        liveEvent.value = event
+        owner.start()
+
+        // When
+        liveEvent.observe(owner, observer)
+
+        // Then
+        verify(observer, times(1)).onChanged(event)
+    }
+
+    @Test
+    fun `observe after start when value exists`() {
+        // Given
+        val event = "event"
+        liveEvent.value = event
+        owner.create()
+
+        // When
+        liveEvent.observe(owner, observer)
+
+        // Then
+        verify(observer, never()).onChanged(any())
+
+        // When
+        owner.start()
+
+        // Then
+        verify(observer, times(1)).onChanged(event)
+    }
+
+    @Test
+    fun `observe when value exists multi observers`() {
+        // Given
+        val event = "event"
+        liveEvent.value = event
+        owner.start()
+        val observer1 = mock<Observer<String>>()
+
+        // When
+        liveEvent.observe(owner, observer)
+        liveEvent.observe(owner, observer1)
+
+        // Then
+        verify(observer, times(1)).onChanged(event)
+        verify(observer1, never()).onChanged(any())
+    }
+
+    @Test
+    fun `observe after start when value exists multi observers`() {
+        // Given
+        val event = "event"
+        liveEvent.value = event
+        owner.create()
+        val observer1 = mock<Observer<String>>()
+
+        // When
+        liveEvent.observe(owner, observer)
+        liveEvent.observe(owner, observer1)
+
+        // Then
+        verify(observer, never()).onChanged(any())
+        verify(observer1, never()).onChanged(any())
+
+        // When
+        owner.start()
 
         // Then
         verify(observer, times(1)).onChanged(event)

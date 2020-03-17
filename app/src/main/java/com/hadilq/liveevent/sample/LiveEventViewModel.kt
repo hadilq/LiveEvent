@@ -23,6 +23,10 @@ class LiveEventViewModel : ViewModel() {
     private val clickedState = LiveEvent<String>()
     val state: LiveData<String> = clickedState
 
+    init {
+        clickedState.value = "default"
+    }
+
     fun clicked() {
         clickedState.value = "${if (clickedState.value == null) "" else clickedState.value} clicked!"
     }

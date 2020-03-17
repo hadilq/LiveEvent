@@ -23,6 +23,7 @@ import androidx.lifecycle.Observer
 
 class LiveEvent<T> : MediatorLiveData<T>() {
 
+    private val pendingValues = ArrayList<T?>()
     private val observers = ArraySet<ObserverWrapper<in T>>()
 
     @MainThread
@@ -58,8 +59,21 @@ class LiveEvent<T> : MediatorLiveData<T>() {
 
     @MainThread
     override fun setValue(t: T?) {
+        if (!hasActiveObservers()) {
+            pendingValues.add(t)
+            return
+        }
         observers.forEach { it.newValue() }
         super.setValue(t)
+    }
+
+    override fun onActive() {
+        super.onActive()
+        val iterator = pendingValues.iterator()
+        while (iterator.hasNext()) {
+            value = iterator.next()
+            iterator.remove()
+        }
     }
 
     private class ObserverWrapper<T>(val observer: Observer<T>) : Observer<T> {

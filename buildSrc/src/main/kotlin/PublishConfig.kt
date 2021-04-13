@@ -15,8 +15,9 @@ import org.gradle.plugins.signing.SigningPlugin
 
 const val SNAPSHOT = "-SNAPSHOT"
 const val GROUP_ID = "com.github.hadilq"
-//const val LIB_VERSION = "1.0.2"
-val LIB_VERSION = "1.0.2.${System.currentTimeMillis()}$SNAPSHOT"
+const val VERSION = "1.0.2"
+//const val LIB_VERSION = VERSION
+val LIB_VERSION = "$VERSION.${System.currentTimeMillis()}$SNAPSHOT"
 
 fun isSnapshot(version: String): Boolean = version.endsWith(SNAPSHOT)
 

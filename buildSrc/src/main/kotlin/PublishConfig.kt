@@ -23,8 +23,8 @@ fun Project.setupPublication() {
     plugins.apply(SigningPlugin::class.java)
 
     group = Versions.groupId
-    version = Versions.libVersion
-//    version = "${Versions.libVersion}.${System.currentTimeMillis()}$SNAPSHOT"
+//    version = Versions.libVersion
+    version = "${Versions.libVersion}.${System.currentTimeMillis()}$SNAPSHOT"
 
     val userId = "hadilq"
     val userName = "Hadi Lashkari Ghouchani"

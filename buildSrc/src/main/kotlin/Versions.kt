@@ -1,9 +1,9 @@
 object Versions {
-    const val compileSdkVersion = 28
-    const val targetSdkVersion = 28
+    const val compileSdkVersion = 30
+    const val targetSdkVersion = 30
     const val minSdkVersion = 14
 
-    const val kotlin_version = "1.3.50"
+    const val kotlin_version = "1.4.32"
     const val dokka_version = "0.9.16"
     const val android_maven_version = "2.1"
     const val gradle_bintray_version = "1.8.4"

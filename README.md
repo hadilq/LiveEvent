@@ -27,9 +27,11 @@ Download
 ---
 Download via gradle
 ```groovy
-implementation "com.github.hadilq.liveevent:liveevent:$libVersion"
+implementation "com.github.hadilq:live-event:$libVersion"
 ```
 where the `libVersion` is [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.hadilq.liveevent/liveevent/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.hadilq.liveevent/liveevent).
+
+Snapshots of the development version are available in [Sonatype's snapshots repository](https://oss.sonatype.org/content/repositories/snapshots).
 
 Contribution
 ---

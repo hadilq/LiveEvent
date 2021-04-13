@@ -1,0 +1,25 @@
+name: Health Check
+on:
+  push:
+    branches:
+      - main
+
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+      tags:
+        description: 'Test scenario tags'
+jobs:
+  check:
+    name: Run tests and checks
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
+        with:
+          java-version: '8'
+      - name: Run all checks
+        run:  ./gradlew check

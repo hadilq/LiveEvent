@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/hadilq/LiveEvent.svg?branch=master)](https://travis-ci.org/hadilq/LiveEvent)
+![Health Check](https://github.com/hadilq/LiveEvent/workflows/Health%20Check/badge.svg?branch=main)
 [![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.hadilq.liveevent/liveevent/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.hadilq.liveevent/liveevent)
 
 Live Event

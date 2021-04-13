@@ -1,6 +1,3 @@
-plugins {
-    kotlin("jvm") version Versions.kotlin_version
-}
 /**
  * Copyright 2019 Hadi Lashkari Ghouchani
 
@@ -19,10 +16,10 @@ plugins {
 buildscript {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
     dependencies {
-        classpath("com.android.tools.build:gradle:4.1.0")
+        classpath("com.android.tools.build:gradle:4.1.3") // Change the version in buildSrc module too.
         classpath(kotlin("gradle-plugin", version = Versions.kotlin_version))
         classpath("org.jetbrains.dokka:dokka-gradle-plugin:${Versions.dokka_version}")
     }

@@ -4,7 +4,7 @@ object Versions {
     const val minSdkVersion = 14
 
     const val kotlin_version = "1.4.32"
-    const val dokka_version = "0.9.16"
+    const val dokka_version = "1.4.30"
     const val android_maven_version = "2.1"
     const val gradle_bintray_version = "1.8.4"
 

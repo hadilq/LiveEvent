@@ -25,6 +25,7 @@ fun Project.setupPublication() {
     group = Versions.groupId
 //    version = Versions.libVersion
     version = "${Versions.libVersion}.${System.currentTimeMillis()}$SNAPSHOT"
+    println("Download the SNAPSHOT with: implementation(\"${group}:${Versions.artifactId}:${version}\")")
 
     val userId = "hadilq"
     val userName = "Hadi Lashkari Ghouchani"

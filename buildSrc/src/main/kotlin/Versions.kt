@@ -8,9 +8,9 @@ object Versions {
     const val android_maven_version = "2.1"
     const val gradle_bintray_version = "1.8.4"
 
-    const val groupId = "com.github.hadilq.liveevent"
-    const val artifactId = "liveevent"
-    const val libVersion = "1.2.0"
+    const val groupId = "com.github.hadilq"
+    const val artifactId = "live-event"
+    const val libVersion = "1.2.1"
 
     const val androidx_lib_version = "1.0.1"
     const val constraint_layout_version = "1.1.3"

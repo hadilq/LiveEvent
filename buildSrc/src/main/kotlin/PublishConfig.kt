@@ -14,10 +14,6 @@ import org.gradle.plugins.signing.SigningExtension
 import org.gradle.plugins.signing.SigningPlugin
 
 const val SNAPSHOT = "-SNAPSHOT"
-const val GROUP_ID = "com.github.hadilq"
-const val VERSION = "1.0.3"
-//const val LIB_VERSION = VERSION
-val LIB_VERSION = "$VERSION.${System.currentTimeMillis()}$SNAPSHOT"
 
 fun isSnapshot(version: String): Boolean = version.endsWith(SNAPSHOT)
 
@@ -26,8 +22,9 @@ fun Project.setupPublication() {
     plugins.apply("maven-publish")
     plugins.apply(SigningPlugin::class.java)
 
-    group = GROUP_ID
-    version = LIB_VERSION
+    group = Versions.groupId
+    version = Versions.libVersion
+//    version = "${Versions.libVersion}.${System.currentTimeMillis()}$SNAPSHOT"
 
     val userId = "hadilq"
     val userName = "Hadi Lashkari Ghouchani"

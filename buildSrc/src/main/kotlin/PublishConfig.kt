@@ -52,7 +52,7 @@ fun Project.setupPublication() {
     publishing {
         publications {
             register("maven", MavenPublication::class) {
-                artifact(sourcesJar.get())
+                artifact(sourcesJar)
                 artifact(javadocJar)
                 if (!isSnapshot(version)) {
                     signing.sign(this)

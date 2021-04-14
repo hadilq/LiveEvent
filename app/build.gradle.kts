@@ -20,8 +20,8 @@ android {
 dependencies {
     kapt(Depends.archComponentsCompiler)
 
-    implementation(project(":live-event"))
-//    implementation("${Versions.groupId}:${Versions.artifactId}:${Versions.libVersion}")
+//    implementation(project(":live-event"))
+    implementation("${Versions.groupId}:${Versions.artifactId}:${Versions.libVersion}")
 
     implementation(Depends.kotlin)
     implementation(Depends.supportCompat)

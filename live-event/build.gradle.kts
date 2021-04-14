@@ -16,6 +16,7 @@
 plugins {
     id("com.android.library")
     kotlin("android")
+    kotlin("android.extensions")
 }
 
 setupPublication()
@@ -27,6 +28,12 @@ android {
         minSdkVersion(Versions.minSdkVersion)
         targetSdkVersion(Versions.targetSdkVersion)
         versionName(Versions.libVersion)
+    }
+
+    buildTypes {
+        getByName("release") {
+            isMinifyEnabled = false
+        }
     }
 }
 

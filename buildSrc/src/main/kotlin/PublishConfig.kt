@@ -38,73 +38,57 @@ fun Project.setupPublication() {
     val ossrhPassword: String? = System.getenv()["OSSRH_PASSWORD"]
         ?: findProperty("ossrhPassword") as String?
 
-    val javadocJar by tasks.registering(Jar::class) {
-        group = JavaBasePlugin.DOCUMENTATION_GROUP
-        archiveClassifier.value("javadoc")
-        from(tasks.getByName("dokkaJavadoc"))
-    }
-
-    val sourcesJar by tasks.registering(Jar::class) {
-        archiveClassifier.value("sources")
-        from(android.sourceSets.getByName("main").java.srcDirs)
-    }
-
     publishing {
-        publications {
-            register("maven", MavenPublication::class) {
-                artifact(sourcesJar)
-                artifact(javadocJar)
-                if (!isSnapshot(version)) {
-                    signing.sign(this)
+        publications.withType<MavenPublication>().all {
+            if (!isSnapshot(version)) {
+                signing.sign(this)
+            }
+            pom {
+                withXml {
+                    asNode().apply {
+                        appendNode("name", "LiveEvent")
+                        appendNode(
+                            "description",
+                            "This library holds a class to handle single live events in Android MVVM architectural pattern. This class is extended " +
+                                    "form LiveData class, from `androidx.lifecycle:lifecycle-extensions` library, to propagate the data as an event, " +
+                                    "which means it emits data just once."
+                        )
+                        appendNode("url", githubUrl)
+                    }
                 }
-                pom {
-                    withXml {
-                        asNode().apply {
-                            appendNode("name", "LiveEvent")
-                            appendNode(
-                                "description",
-                                "This library holds a class to handle single live events in Android MVVM architectural pattern. This class is extended " +
-                                        "form LiveData class, from `androidx.lifecycle:lifecycle-extensions` library, to propagate the data as an event, " +
-                                        "which means it emits data just once."
-                            )
-                            appendNode("url", githubUrl)
-                        }
+                licenses {
+                    license {
+                        name.set("The Apache License, Version 2.0")
+                        url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
                     }
-                    licenses {
-                        license {
-                            name.set("The Apache License, Version 2.0")
-                            url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
-                        }
+                }
+                developers {
+                    developer {
+                        id.set(userId)
+                        name.set(userName)
+                        email.set(userEmail)
                     }
-                    developers {
-                        developer {
-                            id.set(userId)
-                            name.set(userName)
-                            email.set(userEmail)
-                        }
-                    }
-                    scm {
-                        url.set(githubUrl)
-                        connection.set(githubScmUrl)
-                        developerConnection.set(githubScmUrl)
-                    }
+                }
+                scm {
+                    url.set(githubUrl)
+                    connection.set(githubScmUrl)
+                    developerConnection.set(githubScmUrl)
                 }
             }
         }
+    }
 
-        repositories {
-            maven {
-                url = if (isSnapshot("$version"))
-                    uri("https://oss.sonatype.org/content/repositories/snapshots/")
-                else
-                    uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
-                credentials {
-                    username = ossrhUsername
-                    password = ossrhPassword
-                }
+    repositories {
+        maven {
+            url = if (isSnapshot("$version"))
+                uri("https://oss.sonatype.org/content/repositories/snapshots/")
+            else
+                uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
+            credentials {
+                username = ossrhUsername
+                password = ossrhPassword
             }
         }
-
     }
 }
 
@@ -113,18 +97,6 @@ fun Project.setupPublication() {
  */
 val Project.signing: SigningExtension
     get() = (this as ExtensionAware).extensions.getByName("signing") as SigningExtension
-
-/**
- * Retrieves the [sourceSets][SourceSetContainer] extension.
- */
-val Project.sourceSets: SourceSetContainer
-    get() = (this as ExtensionAware).extensions.getByName("sourceSets") as SourceSetContainer
-
-/**
- * Provides the existing [main][SourceSet] element.
- */
-val SourceSetContainer.main: NamedDomainObjectProvider<SourceSet>
-    get() = named<SourceSet>("main")
 
 /**
  * Configures the [publishing][PublishingExtension] extension.

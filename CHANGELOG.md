@@ -1,6 +1,14 @@
 Changelog
 =========
 
+1.2.2
+----
+
+_2021-04-14_
+
+ - Make it work with Android!
+
+
 1.2.1
 ----
 

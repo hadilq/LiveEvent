@@ -27,6 +27,9 @@ open class LiveEvent<T> : MediatorLiveData<T>() {
 
     @MainThread
     override fun observe(owner: LifecycleOwner, observer: Observer<in T>) {
+        observers.find { it.observer === observer }?.let { _ -> // existing
+            return
+        }
         val wrapper = ObserverWrapper(observer)
         observers.add(wrapper)
         super.observe(owner, wrapper)
@@ -34,6 +37,9 @@ open class LiveEvent<T> : MediatorLiveData<T>() {
 
     @MainThread
     override fun observeForever(observer: Observer<in T>) {
+        observers.find { it.observer === observer }?.let { _ -> // existing
+            return
+        }
         val wrapper = ObserverWrapper(observer)
         observers.add(wrapper)
         super.observeForever(wrapper)

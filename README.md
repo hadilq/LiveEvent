@@ -1,5 +1,5 @@
 ![Health Check](https://github.com/hadilq/LiveEvent/workflows/Health%20Check/badge.svg?branch=main)
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.hadilq.liveevent/liveevent/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.hadilq.liveevent/liveevent)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.github.hadilq/live-event/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.github.hadilq/live-event)
 
 Live Event
 ---

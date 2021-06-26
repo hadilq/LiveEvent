@@ -1,0 +1,12 @@
+compiler.xml
+caches
+libraries
+modules.xml
+workspace.xml
+navEditor.xml
+assetWizardSettings.xml
+gradle.xml
+jarRepositories.xml
+misc.xml
+runConfigurations.xml
+vcs.xml

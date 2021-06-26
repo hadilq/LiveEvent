@@ -21,9 +21,12 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Observer
 
-open class LiveEvent<T> : MediatorLiveData<T>() {
+open class LiveEvent<T>(
+    private val config: LiveEventConfig = LiveEventConfig.Normal
+) : MediatorLiveData<T>() {
 
     private val observers = ArraySet<ObserverWrapper<in T>>()
+    private var hasValueWithoutFirstObserver: Boolean = false
 
     @MainThread
     override fun observe(owner: LifecycleOwner, observer: Observer<in T>) {
@@ -31,6 +34,10 @@ open class LiveEvent<T> : MediatorLiveData<T>() {
             return
         }
         val wrapper = ObserverWrapper(observer)
+        if (hasValueWithoutFirstObserver) {
+            hasValueWithoutFirstObserver = false
+            wrapper.newValue()
+        }
         observers.add(wrapper)
         super.observe(owner, wrapper)
     }
@@ -64,6 +71,11 @@ open class LiveEvent<T> : MediatorLiveData<T>() {
 
     @MainThread
     override fun setValue(t: T?) {
+        if (config == LiveEventConfig.PreferFirstObserver &&
+            observers.isEmpty()
+        ) {
+            hasValueWithoutFirstObserver = true
+        }
         observers.forEach { it.newValue() }
         super.setValue(t)
     }

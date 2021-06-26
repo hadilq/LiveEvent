@@ -17,7 +17,6 @@ package com.hadilq.liveevent
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.hadilq.liveevent.LiveEvent
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.never
 import com.nhaarman.mockitokotlin2.times
@@ -26,12 +25,27 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TestRule
+import org.junit.runner.RunWith
+import org.junit.runners.Parameterized
 
-
-class LiveEventTest {
+@RunWith(Parameterized::class)
+class LiveEventTest(
+    private val config: LiveEventConfig
+) {
 
     @get:Rule
     var rule: TestRule = InstantTaskExecutorRule()
+
+    companion object {
+        @Parameterized.Parameters
+        @JvmStatic
+        fun data(): Collection<Array<LiveEventConfig>> {
+            return listOf(
+                arrayOf(LiveEventConfig.Normal),
+                arrayOf(LiveEventConfig.PreferFirstObserver)
+            )
+        }
+    }
 
     private lateinit var liveEvent: LiveEvent<String>
     private lateinit var owner: TestLifecycleOwner
@@ -39,7 +53,7 @@ class LiveEventTest {
 
     @Before
     fun setup() {
-        liveEvent = LiveEvent()
+        liveEvent = LiveEvent(config = config)
         owner = TestLifecycleOwner()
         observer = mock()
     }
@@ -127,6 +141,25 @@ class LiveEventTest {
 
         // Then
         verify(observer, times(1)).onChanged(event)
+    }
+
+    @Test
+    fun `observe after emit event`() {
+        // Given
+        owner.create()
+        val event = "event"
+        liveEvent.value = event
+        liveEvent.observe(owner, observer)
+
+        // When
+        owner.start()
+
+        // Then
+        if (config == LiveEventConfig.Normal) {
+            verify(observer, never()).onChanged(event)
+        } else {
+            verify(observer, times(1)).onChanged(event)
+        }
     }
 
     @Test

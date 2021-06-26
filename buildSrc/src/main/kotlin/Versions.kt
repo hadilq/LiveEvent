@@ -8,7 +8,7 @@ object Versions {
 
     const val groupId = "com.github.hadilq"
     const val artifactId = "live-event"
-    const val libVersion = "1.2.3"
+    const val libVersion = "1.3.0"
 
     const val androidx_lib_version = "1.2.0"
     const val constraint_layout_version = "2.0.4"

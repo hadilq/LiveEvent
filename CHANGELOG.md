@@ -1,6 +1,13 @@
 Changelog
 =========
 
+1.3.0
+----
+
+_2021-06-26_
+
+ - Create `LiveEventConfig` to handle `PreferFirstObserver` behavior.
+
 1.2.3
 ----
 
